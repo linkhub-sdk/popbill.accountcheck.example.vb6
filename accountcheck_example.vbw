@@ -1,8 +1,8 @@
 frmExample = 141, 213, 1096, 766, , 0, 0, 1070, 666, C
 cStringBuilder = 0, 0, 0, 0, C
-Linkhub = 0, 0, 0, 0, C
+Linkhub = 66, 87, 1341, 736, 
 LinkhubToken = 0, 0, 0, 0, C
-PBAccountCheckService = 0, 550, 388, 825, Z
+PBAccountCheckService = 0, 193, 1422, 825, 
 PBchargeInfo = 388, 0, 776, 275, C
 PBContactInfo = 776, 550, 1164, 825, C
 PBCorpInfo = 776, 275, 1164, 550, C
