@@ -1,68 +1,157 @@
 VERSION 5.00
 Begin VB.Form frmExample 
    Caption         =   "팝빌 예금주조회 SDK Example"
-   ClientHeight    =   5520
+   ClientHeight    =   7170
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   14805
+   ClientWidth     =   15090
    LinkTopic       =   "Form1"
-   ScaleHeight     =   5520
-   ScaleWidth      =   14805
+   ScaleHeight     =   7170
+   ScaleWidth      =   15090
    StartUpPosition =   2  '화면 가운데
    Begin VB.Frame Frame5 
       Caption         =   "예금주조회"
-      Height          =   1335
+      Height          =   3135
       Left            =   120
       TabIndex        =   14
-      Top             =   3480
-      Width           =   4935
-      Begin VB.TextBox txtAccountNumber 
-         Height          =   270
-         Left            =   1200
-         TabIndex        =   33
-         Text            =   "94324511758"
-         Top             =   720
-         Width           =   1935
+      Top             =   3720
+      Width           =   14895
+      Begin VB.Frame Frame11 
+         Caption         =   "계좌실명조회"
+         Height          =   2055
+         Left            =   7920
+         TabIndex        =   35
+         Top             =   480
+         Width           =   5055
+         Begin VB.CommandButton btnCheckDepositorInfo 
+            Caption         =   "계좌실명조회"
+            Height          =   855
+            Left            =   3480
+            TabIndex        =   44
+            Top             =   480
+            Width           =   1335
+         End
+         Begin VB.ComboBox cboIdentityNumType 
+            Height          =   300
+            ItemData        =   "frmExample.frx":0000
+            Left            =   1800
+            List            =   "frmExample.frx":000A
+            TabIndex        =   43
+            Text            =   "P"
+            Top             =   1200
+            Width           =   1575
+         End
+         Begin VB.TextBox txtIdentityNum 
+            Height          =   270
+            Left            =   1440
+            TabIndex        =   42
+            Top             =   1560
+            Width           =   1935
+         End
+         Begin VB.TextBox txtAccountNumberD 
+            Height          =   270
+            Left            =   1440
+            TabIndex        =   41
+            Top             =   840
+            Width           =   1935
+         End
+         Begin VB.TextBox txtBankCodeD 
+            Height          =   270
+            Left            =   1440
+            TabIndex        =   40
+            Top             =   480
+            Width           =   1935
+         End
+         Begin VB.Label Label4 
+            Caption         =   "등록번호: "
+            Height          =   255
+            Index           =   5
+            Left            =   480
+            TabIndex        =   39
+            Top             =   1560
+            Width           =   1095
+         End
+         Begin VB.Label Label4 
+            Caption         =   "등록번호 유형: "
+            Height          =   255
+            Index           =   4
+            Left            =   480
+            TabIndex        =   38
+            Top             =   1200
+            Width           =   1455
+         End
+         Begin VB.Label Label4 
+            Caption         =   "계좌번호 : "
+            Height          =   255
+            Index           =   3
+            Left            =   480
+            TabIndex        =   37
+            Top             =   840
+            Width           =   1095
+         End
+         Begin VB.Label Label4 
+            Caption         =   "기관코드 : "
+            Height          =   255
+            Index           =   2
+            Left            =   480
+            TabIndex        =   36
+            Top             =   480
+            Width           =   1095
+         End
       End
-      Begin VB.TextBox txtBankCode 
-         Height          =   270
-         Left            =   1200
-         TabIndex        =   32
-         Text            =   "0004"
-         Top             =   320
-         Width           =   1935
-      End
-      Begin VB.CommandButton btnCheckAccountInfo 
-         Caption         =   "예금주조회"
-         Height          =   855
-         Left            =   3360
-         TabIndex        =   15
-         Top             =   240
-         Width           =   1215
-      End
-      Begin VB.Label Label4 
-         Caption         =   "계좌번호 : "
-         Height          =   255
-         Index           =   1
-         Left            =   240
-         TabIndex        =   31
-         Top             =   765
-         Width           =   1095
-      End
-      Begin VB.Label Label4 
-         Caption         =   "기관코드 : "
-         Height          =   255
-         Index           =   0
-         Left            =   240
-         TabIndex        =   16
-         Top             =   360
-         Width           =   1095
+      Begin VB.Frame Frame10 
+         Caption         =   "계좌성명조회"
+         Height          =   1575
+         Left            =   2160
+         TabIndex        =   29
+         Top             =   480
+         Width           =   4815
+         Begin VB.CommandButton btnCheckAccountInfo 
+            Caption         =   "계좌성명조회"
+            Height          =   855
+            Left            =   3240
+            TabIndex        =   32
+            Top             =   480
+            Width           =   1335
+         End
+         Begin VB.TextBox txtBankCode 
+            Height          =   270
+            Left            =   1200
+            TabIndex        =   31
+            Top             =   480
+            Width           =   1935
+         End
+         Begin VB.TextBox txtAccountNumber 
+            Height          =   270
+            Left            =   1200
+            TabIndex        =   30
+            Top             =   960
+            Width           =   1935
+         End
+         Begin VB.Label Label4 
+            Caption         =   "기관코드 : "
+            Height          =   255
+            Index           =   0
+            Left            =   240
+            TabIndex        =   34
+            Top             =   480
+            Width           =   1095
+         End
+         Begin VB.Label Label4 
+            Caption         =   "계좌번호 : "
+            Height          =   255
+            Index           =   1
+            Left            =   240
+            TabIndex        =   33
+            Top             =   960
+            Width           =   1095
+         End
       End
    End
    Begin VB.Frame Frame4 
       Caption         =   "담당자 관련"
-      Height          =   1815
-      Left            =   10560
+      Height          =   2175
+      Left            =   10920
       TabIndex        =   10
       Top             =   1200
       Width           =   1935
@@ -93,31 +182,47 @@ Begin VB.Form frmExample
    End
    Begin VB.Frame Frame2 
       Caption         =   "포인트 관련"
-      Height          =   1815
+      Height          =   2175
       Left            =   2040
       TabIndex        =   7
       Top             =   1200
-      Width           =   1935
-      Begin VB.CommandButton btnGetUnitCost 
-         Caption         =   "조회단가 확인"
+      Width           =   2415
+      Begin VB.CommandButton btnGetUnitCost_DEP 
+         Caption         =   "실명조회 단가 확인"
          Height          =   375
          Left            =   120
-         TabIndex        =   29
-         Top             =   720
-         Width           =   1695
+         TabIndex        =   46
+         Top             =   1680
+         Width           =   2175
       End
-      Begin VB.CommandButton btnGetChargeInfo 
-         Caption         =   "과금정보 확인"
+      Begin VB.CommandButton btnGetChargeInfo_DEP 
+         Caption         =   "실명조회 과금정보 확인"
+         Height          =   375
+         Left            =   120
+         TabIndex        =   45
+         Top             =   720
+         Width           =   2175
+      End
+      Begin VB.CommandButton btnGetUnitCost_ACC 
+         Caption         =   "성명조회 단가 확인"
+         Height          =   375
+         Left            =   120
+         TabIndex        =   27
+         Top             =   1200
+         Width           =   2175
+      End
+      Begin VB.CommandButton btnGetChargeInfo_ACC 
+         Caption         =   "성명조회 과금정보 확인"
          Height          =   375
          Left            =   120
          TabIndex        =   8
          Top             =   240
-         Width           =   1695
+         Width           =   2175
       End
    End
    Begin VB.Frame Frame1 
       Caption         =   "회원정보"
-      Height          =   1815
+      Height          =   2175
       Left            =   240
       TabIndex        =   3
       Top             =   1200
@@ -173,8 +278,8 @@ Begin VB.Form frmExample
    End
    Begin VB.Frame Frame3 
       Caption         =   "팝빌 URL 관련"
-      Height          =   1815
-      Left            =   8640
+      Height          =   2175
+      Left            =   9000
       TabIndex        =   9
       Top             =   1200
       Width           =   1815
@@ -182,30 +287,30 @@ Begin VB.Form frmExample
          Caption         =   "팝빌 로그인 URL"
          Height          =   375
          Left            =   120
-         TabIndex        =   30
+         TabIndex        =   28
          Top             =   240
          Width           =   1575
       End
    End
    Begin VB.Frame Frame6 
       Caption         =   "팝빌기본 API"
-      Height          =   2295
+      Height          =   2535
       Left            =   120
-      TabIndex        =   17
+      TabIndex        =   15
       Top             =   960
-      Width           =   14535
+      Width           =   14775
       Begin VB.Frame Frame7 
          Caption         =   "회사정보 관련"
-         Height          =   1815
-         Left            =   12480
-         TabIndex        =   24
+         Height          =   2175
+         Left            =   12840
+         TabIndex        =   22
          Top             =   240
          Width           =   1815
          Begin VB.CommandButton btnGetCorpInfo 
             Caption         =   "회사정보 조회"
             Height          =   375
             Left            =   120
-            TabIndex        =   26
+            TabIndex        =   24
             Top             =   240
             Width           =   1575
          End
@@ -213,23 +318,23 @@ Begin VB.Form frmExample
             Caption         =   "회사정보 수정"
             Height          =   375
             Left            =   120
-            TabIndex        =   25
+            TabIndex        =   23
             Top             =   720
             Width           =   1575
          End
       End
       Begin VB.Frame Frame8 
          Caption         =   "연동과금 포인트"
-         Height          =   1815
-         Left            =   4080
-         TabIndex        =   21
+         Height          =   2175
+         Left            =   4440
+         TabIndex        =   19
          Top             =   240
          Width           =   2055
          Begin VB.CommandButton btnGetBalance 
             Caption         =   "잔여포인트 확인"
             Height          =   375
             Left            =   120
-            TabIndex        =   23
+            TabIndex        =   21
             Top             =   240
             Width           =   1815
          End
@@ -237,23 +342,23 @@ Begin VB.Form frmExample
             Caption         =   "포인트 충전 URL"
             Height          =   375
             Left            =   120
-            TabIndex        =   22
+            TabIndex        =   20
             Top             =   720
             Width           =   1815
          End
       End
       Begin VB.Frame Frame9 
          Caption         =   "파트너과금 포인트"
-         Height          =   1815
-         Left            =   6240
-         TabIndex        =   18
+         Height          =   2175
+         Left            =   6600
+         TabIndex        =   16
          Top             =   240
          Width           =   2175
          Begin VB.CommandButton btnGetPartnerBalance 
             Caption         =   "파트너포인트 확인"
             Height          =   375
             Left            =   120
-            TabIndex        =   20
+            TabIndex        =   18
             Top             =   240
             Width           =   1935
          End
@@ -261,7 +366,7 @@ Begin VB.Form frmExample
             Caption         =   "포인트 충전 URL"
             Height          =   375
             Left            =   120
-            TabIndex        =   19
+            TabIndex        =   17
             Top             =   720
             Width           =   1935
          End
@@ -271,7 +376,7 @@ Begin VB.Form frmExample
       Caption         =   "팝빌회원 사업자번호 : "
       Height          =   225
       Left            =   240
-      TabIndex        =   28
+      TabIndex        =   26
       Top             =   495
       Width           =   1935
    End
@@ -279,7 +384,7 @@ Begin VB.Form frmExample
       Caption         =   "팝빌회원 아이디 : "
       Height          =   225
       Left            =   4080
-      TabIndex        =   27
+      TabIndex        =   25
       Top             =   495
       Width           =   1455
    End
@@ -294,7 +399,7 @@ Attribute VB_Exposed = False
 ' 팝빌 예금주조회 API VB 6.0 SDK Example
 '
 '
-' - 업데이트 일자 : 2021-10-07
+' - 업데이트 일자 : 2022-01-13
 ' - 연동 기술지원 연락처 : 1600-9854 / 070-4504-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
@@ -340,10 +445,50 @@ Private Sub btnCheckAccountInfo_Click()
     tmp = tmp + "accountNumber (계좌번호) : " + AccountInfo.accountNumber + vbCrLf
     tmp = tmp + "accountName (예금주 성명) : " + AccountInfo.accountName + vbCrLf
     tmp = tmp + "checkDate (확인일시) : " + AccountInfo.checkDate + vbCrLf
-    tmp = tmp + "resultCode (응답코드) : " + AccountInfo.resultCode + vbCrLf
+    tmp = tmp + "result (응답코드) : " + AccountInfo.result + vbCrLf
     tmp = tmp + "resultMessage (응답메시지) : " + AccountInfo.resultMessage
     
-    MsgBox tmp, , "예금주조회"
+    MsgBox tmp, , "계좌성명조회"
+End Sub
+
+'=========================================================================
+' 1건의 예금주실명을 조회합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#CheckDepositorInfo
+'=========================================================================
+Private Sub btnCheckDepositorInfo_Click()
+    Dim DepositorInfo As PBDepositorCheckInfo
+    Dim tmp As String
+    
+    Dim IdentityNumType As String
+    
+    Select Case cboIdentityNumType.Text
+        Case "P"
+            IdentityNumType = "P"
+        Case "B"
+            IdentityNumType = "B"
+        Case Else
+            MsgBox "등록번호 유형을 선택해주세요."
+            Exit Sub
+    End Select
+    
+    Set DepositorInfo = AccountCheckService.CheckDepositorInfo(txtUserCorpNum.Text, txtBankCodeD.Text, txtAccountNumberD.Text, IdentityNumType, txtIdentityNum.Text)
+    
+    If DepositorInfo Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    tmp = tmp + "bankCode (기관코드) : " + DepositorInfo.bankCode + vbCrLf
+    tmp = tmp + "accountNumber (계좌번호) : " + DepositorInfo.accountNumber + vbCrLf
+    tmp = tmp + "accountName (예금주 성명) : " + DepositorInfo.accountName + vbCrLf
+    tmp = tmp + "checkDate (확인일시) : " + DepositorInfo.checkDate + vbCrLf
+    tmp = tmp + "identityNumType (등록번호 유형) : " + DepositorInfo.IdentityNumType + vbCrLf
+    tmp = tmp + "identityNum (등록번호) : " + DepositorInfo.identityNum + vbCrLf
+    tmp = tmp + "result (응답코드) : " + DepositorInfo.result + vbCrLf
+    tmp = tmp + "resultMessage (응답메시지) : " + DepositorInfo.resultMessage
+    
+    MsgBox tmp, , "계좌실명조회"
+
 End Sub
 
 '=========================================================================
@@ -418,14 +563,42 @@ Private Sub btnGetBalance_Click()
 End Sub
 
 '=========================================================================
-' 예금주조회 API 서비스 과금정보를 확인합니다.
+' 계좌성명조회 API 서비스 과금정보를 확인합니다.
 ' - https://docs.popbill.com/accountcheck/vb/api#GetChargeInfo
 '=========================================================================
-Private Sub btnGetChargeInfo_Click()
+Private Sub btnGetChargeInfo_ACC_Click()
     Dim ChargeInfo As PBchargeInfo
     Dim tmp As String
+    Dim ServiceType As String
     
-    Set ChargeInfo = AccountCheckService.GetChargeInfo(txtUserCorpNum.Text)
+    ServiceType = "성명"
+    
+    Set ChargeInfo = AccountCheckService.GetChargeInfo(txtUserCorpNum.Text, txtUserID.Text, ServiceType)
+     
+    If ChargeInfo Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    tmp = tmp + "unitCost (조회단가) : " + ChargeInfo.unitCost + vbCrLf
+    tmp = tmp + "chargeMethod (과금유형) : " + ChargeInfo.chargeMethod + vbCrLf
+    tmp = tmp + "rateSystem (과금제도) : " + ChargeInfo.rateSystem + vbCrLf
+    
+    MsgBox tmp
+End Sub
+
+'=========================================================================
+' 계좌실명조회 API 서비스 과금정보를 확인합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#GetChargeInfo
+'=========================================================================
+Private Sub btnGetChargeInfo_DEP_Click()
+    Dim ChargeInfo As PBchargeInfo
+    Dim tmp As String
+    Dim ServiceType As String
+    
+    ServiceType = "실명"
+    
+    Set ChargeInfo = AccountCheckService.GetChargeInfo(txtUserCorpNum.Text, txtUserID.Text, ServiceType)
      
     If ChargeInfo Is Nothing Then
         MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
@@ -519,13 +692,36 @@ Private Sub btnGetPartnerURL_CHRG_Click()
 End Sub
 
 '=========================================================================
-' 예금주 성명 조회시 과금되는 포인트 단가를 확인합니다.
+' 계좌성명조회시 과금되는 포인트 단가를 확인합니다.
 ' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
 '=========================================================================
-Private Sub btnGetUnitCost_Click()
+Private Sub btnGetUnitCost_ACC_Click()
     Dim unitCost As Double
+    Dim ServiceType As String
     
-    unitCost = AccountCheckService.GetUnitCost(txtUserCorpNum.Text)
+    ServiceType = "성명"
+    
+    unitCost = AccountCheckService.GetUnitCost(txtUserCorpNum.Text, ServiceType)
+    
+    If unitCost < 0 Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "조회단가 : " + CStr(unitCost)
+End Sub
+
+'=========================================================================
+' 계좌실명조회시 과금되는 포인트 단가를 확인합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
+'=========================================================================
+Private Sub btnGetUnitCost_DEP_Click()
+    Dim unitCost As Double
+    Dim ServiceType As String
+    
+    ServiceType = "실명"
+    
+    unitCost = AccountCheckService.GetUnitCost(txtUserCorpNum.Text, ServiceType)
     
     If unitCost < 0 Then
         MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
