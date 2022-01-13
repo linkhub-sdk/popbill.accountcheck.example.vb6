@@ -459,19 +459,19 @@ Private Sub btnCheckDepositorInfo_Click()
     Dim DepositorInfo As PBDepositorCheckInfo
     Dim tmp As String
     
-    Dim IdentityNumType As String
+    Dim identityNumType As String
     
     Select Case cboIdentityNumType.Text
         Case "P"
-            IdentityNumType = "P"
+            identityNumType = "P"
         Case "B"
-            IdentityNumType = "B"
+            identityNumType = "B"
         Case Else
             MsgBox "등록번호 유형을 선택해주세요."
             Exit Sub
     End Select
     
-    Set DepositorInfo = AccountCheckService.CheckDepositorInfo(txtUserCorpNum.Text, txtBankCodeD.Text, txtAccountNumberD.Text, IdentityNumType, txtIdentityNum.Text)
+    Set DepositorInfo = AccountCheckService.CheckDepositorInfo(txtUserCorpNum.Text, txtBankCodeD.Text, txtAccountNumberD.Text, identityNumType, txtIdentityNum.Text)
     
     If DepositorInfo Is Nothing Then
         MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
@@ -482,7 +482,7 @@ Private Sub btnCheckDepositorInfo_Click()
     tmp = tmp + "accountNumber (계좌번호) : " + DepositorInfo.accountNumber + vbCrLf
     tmp = tmp + "accountName (예금주 성명) : " + DepositorInfo.accountName + vbCrLf
     tmp = tmp + "checkDate (확인일시) : " + DepositorInfo.checkDate + vbCrLf
-    tmp = tmp + "identityNumType (등록번호 유형) : " + DepositorInfo.IdentityNumType + vbCrLf
+    tmp = tmp + "identityNumType (등록번호 유형) : " + DepositorInfo.identityNumType + vbCrLf
     tmp = tmp + "identityNum (등록번호) : " + DepositorInfo.identityNum + vbCrLf
     tmp = tmp + "result (응답코드) : " + DepositorInfo.result + vbCrLf
     tmp = tmp + "resultMessage (응답메시지) : " + DepositorInfo.resultMessage
@@ -851,9 +851,6 @@ Private Sub btnRegistContact_Click()
     '회사조회 권한여부, True-회사조회 / False-개인조회
     joinData.searchAllAllowYN = True
     
-    '관리자 여부, True-관리자 / False-사용자
-    joinData.mgrYN = False
-    
     Set Response = AccountCheckService.RegistContact(txtUserCorpNum.Text, joinData)
     
     If Response Is Nothing Then
@@ -892,9 +889,6 @@ Private Sub btnUpdateContact_Click()
 
     '회사조회 권한여부, True-회사조회 / False-개인조회
     joinData.searchAllAllowYN = True
-    
-    '관리자 여부, True-관리자 / False-사용자
-    joinData.mgrYN = False
                 
     Set Response = AccountCheckService.UpdateContact(txtUserCorpNum.Text, joinData, txtUserID.Text)
     
