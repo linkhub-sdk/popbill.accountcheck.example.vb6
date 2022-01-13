@@ -11,6 +11,7 @@ Class=PBCorpInfo; PopbillAccountCheck\PBCorpInfo.cls
 Class=PBAccountCheckInfo; PopbillAccountCheck\PBAccountCheckInfocls.cls
 Class=PBJoinForm; PopbillAccountCheck\PBJoinForm.cls
 Class=PBResponse; PopbillAccountCheck\PBResponse.cls
+Class=PBDepositorCheckInfo; PopbillAccountCheck\PBDepositorCheckInfo.cls
 Startup="frmExample"
 HelpFile=""
 Command32=""
