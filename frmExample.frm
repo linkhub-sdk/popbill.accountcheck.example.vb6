@@ -439,13 +439,13 @@ Attribute VB_Exposed = False
 '
 '
 ' - 업데이트 일자 : 2022-01-17
-' - 연동 기술지원 연락처 : 1600-9854 / 070-4504-2991
-' - 연동 기술지원 이메일 : code@linkhub.co.kr
+' - 연동 기술지원 연락처 : 1600-9854
+' - 연동 기술지원 이메일 : code@linkhubcorp.com
+' - VB6 SDK 적용방법 안내 : https://docs.popbill.com/accountcheck/tutorial/vb
 '
 ' <테스트 연동개발 준비사항>
 ' 1) 25, 28번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 '    링크허브 가입시 메일로 발급받은 인증정보를 참조하여 변경합니다.
-' 2) 팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입합니다.
 '=========================================================================
 
 Option Explicit
@@ -457,7 +457,7 @@ Option Explicit
 '=========================================================================
 
 '링크아이디
-Private Const LinkID = "TESTER"
+Private Const linkID = "TESTER"
 
 '비밀키. 유출에 주의하시기 바랍니다.
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
@@ -555,7 +555,7 @@ End Sub
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = AccountCheckService.CheckIsMember(txtUserCorpNum.Text, LinkID)
+    Set Response = AccountCheckService.CheckIsMember(txtUserCorpNum.Text, linkID)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
@@ -724,11 +724,11 @@ Private Sub btnGetCorpInfo_Click()
         Exit Sub
     End If
     
-    tmp = tmp + "ceoname (대표자성명) : " + CorpInfo.ceoname + vbCrLf
-    tmp = tmp + "corpName (상호명) : " + CorpInfo.corpName + vbCrLf
-    tmp = tmp + "addr (주소) : " + CorpInfo.addr + vbCrLf
-    tmp = tmp + "bizType (업태) : " + CorpInfo.bizType + vbCrLf
-    tmp = tmp + "bizClass (종목) : " + CorpInfo.bizClass + vbCrLf
+    tmp = tmp + "ceoname (대표자성명) : " + CorpInfo.CEOName + vbCrLf
+    tmp = tmp + "corpName (상호명) : " + CorpInfo.CorpName + vbCrLf
+    tmp = tmp + "addr (주소) : " + CorpInfo.Addr + vbCrLf
+    tmp = tmp + "bizType (업태) : " + CorpInfo.BizType + vbCrLf
+    tmp = tmp + "bizClass (종목) : " + CorpInfo.BizClass + vbCrLf
     
     MsgBox tmp
 End Sub
@@ -826,25 +826,25 @@ Private Sub btnJoinMember_Click()
     joinData.Password = "asdf$%^123"
     
     '파트너링크 아이디
-    joinData.LinkID = LinkID
+    joinData.linkID = linkID
     
     '사업자번호, '-'제외, 10자리
     joinData.CorpNum = "1234567890"
     
     '대표자성명, 최대 100자
-    joinData.ceoname = "대표자성명"
+    joinData.CEOName = "대표자성명"
     
     '상호명, 최대 200자
-    joinData.corpName = "회원상호"
+    joinData.CorpName = "회원상호"
     
     '사업장 주소, 최대 300자
-    joinData.addr = "주소"
+    joinData.Addr = "주소"
     
     '업태, 최대 100자
-    joinData.bizType = "업태"
+    joinData.BizType = "업태"
     
     '종목, 최대 100자
-    joinData.bizClass = "종목"
+    joinData.BizClass = "종목"
 
     '담당자 성명, 최대 100자
     joinData.ContactName = "담당자성명"
@@ -1016,19 +1016,19 @@ Private Sub btnUpdateCorpInfo_Click()
     Dim Response As PBResponse
     
     '대표자명, 최대 100자
-    CorpInfo.ceoname = "대표자"
+    CorpInfo.CEOName = "대표자"
     
     '상호, 최대 200자
-    CorpInfo.corpName = "상호"
+    CorpInfo.CorpName = "상호"
     
     '주소, 최대 300자
-    CorpInfo.addr = "서울특별시"
+    CorpInfo.Addr = "서울특별시"
     
     '업태, 최대 100자
-    CorpInfo.bizType = "업태"
+    CorpInfo.BizType = "업태"
     
     '종목, 최대 100자
-    CorpInfo.bizClass = "종목"
+    CorpInfo.BizClass = "종목"
     
     Set Response = AccountCheckService.UpdateCorpInfo(txtUserCorpNum.Text, CorpInfo)
     
@@ -1043,18 +1043,15 @@ End Sub
 Private Sub Form_Load()
 
     '모듈 초기화
-    AccountCheckService.Initialize LinkID, SecretKey
+    AccountCheckService.Initialize linkID, SecretKey
     
-    '연동환경 설정값 True(개발용), False(상업용)
+    '연동환경설정값, True-개발용 False-상업용
     AccountCheckService.IsTest = True
     
-    '인증토큰 IP제한기능 사용여부, True(권장)
+    '인증토큰 IP제한기능 사용여부, True-사용, False-미사용, 기본값(True)
     AccountCheckService.IPRestrictOnOff = True
     
-    ' 팝빌 API 서비스 고정 IP 사용여부, True-사용, False-미사용, 기본값(False)
-    AccountCheckService.UseStaticIP = False
-    
-    ' 로컬시스템 시간 사용여부 True-사용, Fasle-미사용, 기본값(False)
+    '로컬시스템 시간 사용여부 True-사용, Fasle-미사용, 기본값(False)
     AccountCheckService.UseLocalTimeYN = False
     
 End Sub
