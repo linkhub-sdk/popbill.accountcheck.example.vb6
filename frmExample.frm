@@ -435,172 +435,28 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 '=========================================================================
 '
-' 팝빌 예금주조회 API VB 6.0 SDK Example
+' 팝빌 예금주조회 API VB SDK Example
 '
-'
-' - 업데이트 일자 : 2022-01-17
+' - 업데이트 일자 : 2022-04-06
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
-' - VB6 SDK 적용방법 안내 : https://docs.popbill.com/accountcheck/tutorial/vb
 '
 ' <테스트 연동개발 준비사항>
-' 1) 25, 28번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
+' 1) 18, 21번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 '    링크허브 가입시 메일로 발급받은 인증정보를 참조하여 변경합니다.
+'
 '=========================================================================
 
 Option Explicit
 
-'=========================================================================
-' - 인증정보(링크아이디, 비밀키)는 파트너의 연동회원을 식별하는
-'   인증에 사용되는 정보로 유출되지 않도록 주의하시기 바랍니다.
-' - 상업용 전환이후에도 인증정보(링크아이디, 비밀키)는 변경되지 않습니다.
-'=========================================================================
-
 '링크아이디
-Private Const linkID = "TESTER"
+Private Const LinkID = "TESTER"
 
-'비밀키. 유출에 주의하시기 바랍니다.
+'비밀키
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
-'예금주조회 서비스 객체 생성
+'예금주조회 클래스 선언
 Private AccountCheckService As New PBAccountCheckService
-
-'=========================================================================
-' 1건의 예금주성명을 조회합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckAccountInfo
-'=========================================================================
-Private Sub btnCheckAccountInfo_Click()
-    Dim AccountInfo As PBAccountCheckInfo
-    Dim tmp As String
-    
-    Set AccountInfo = AccountCheckService.CheckAccountInfo(txtUserCorpNum.Text, txtBankCode.Text, txtAccountNumber.Text)
-    
-    If AccountInfo Is Nothing Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    tmp = tmp + "bankCode (기관코드) : " + AccountInfo.bankCode + vbCrLf
-    tmp = tmp + "accountNumber (계좌번호) : " + AccountInfo.accountNumber + vbCrLf
-    tmp = tmp + "accountName (예금주 성명) : " + AccountInfo.accountName + vbCrLf
-    tmp = tmp + "checkDate (확인일시) : " + AccountInfo.checkDate + vbCrLf
-    tmp = tmp + "result (응답코드) : " + AccountInfo.result + vbCrLf
-    tmp = tmp + "resultMessage (응답메시지) : " + AccountInfo.resultMessage
-    
-    MsgBox tmp, , "계좌성명조회"
-End Sub
-
-'=========================================================================
-' 1건의 예금주실명을 조회합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckDepositorInfo
-'=========================================================================
-Private Sub btnCheckDepositorInfo_Click()
-    Dim DepositorInfo As PBDepositorCheckInfo
-    Dim tmp As String
-    
-    Dim identityNumType As String
-    
-    Select Case cboIdentityNumType.Text
-        Case "P"
-            identityNumType = "P"
-        Case "B"
-            identityNumType = "B"
-        Case Else
-            MsgBox "등록번호 유형을 선택해주세요."
-            Exit Sub
-    End Select
-    
-    Set DepositorInfo = AccountCheckService.CheckDepositorInfo(txtUserCorpNum.Text, txtBankCodeD.Text, txtAccountNumberD.Text, identityNumType, txtIdentityNum.Text)
-    
-    If DepositorInfo Is Nothing Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    tmp = tmp + "bankCode (기관코드) : " + DepositorInfo.bankCode + vbCrLf
-    tmp = tmp + "accountNumber (계좌번호) : " + DepositorInfo.accountNumber + vbCrLf
-    tmp = tmp + "accountName (예금주 성명) : " + DepositorInfo.accountName + vbCrLf
-    tmp = tmp + "checkDate (확인일시) : " + DepositorInfo.checkDate + vbCrLf
-    tmp = tmp + "identityNumType (등록번호 유형) : " + DepositorInfo.identityNumType + vbCrLf
-    tmp = tmp + "identityNum (등록번호) : " + DepositorInfo.identityNum + vbCrLf
-    tmp = tmp + "result (응답코드) : " + DepositorInfo.result + vbCrLf
-    tmp = tmp + "resultMessage (응답메시지) : " + DepositorInfo.resultMessage
-    
-    MsgBox tmp, , "계좌실명조회"
-
-End Sub
-
-'=========================================================================
-' 사용하고자 하는 아이디의 중복여부를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckID
-'=========================================================================
-Private Sub btnCheckID_Click()
-    Dim Response As PBResponse
-    
-    Set Response = AccountCheckService.CheckID(txtUserID.Text)
-    
-    If Response Is Nothing Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
-End Sub
-
-'=========================================================================
-' 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-' - LinkID는 인증정보로 설정되어 있는 링크아이디 값입니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckIsMember
-'=========================================================================
-Private Sub btnCheckIsMember_Click()
-    Dim Response As PBResponse
-    
-    Set Response = AccountCheckService.CheckIsMember(txtUserCorpNum.Text, linkID)
-    
-    If Response Is Nothing Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
-End Sub
-
-'=========================================================================
-' 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetAccessURL
-'=========================================================================
-Private Sub btnGetAccessURL_Click()
-    Dim URL As String
-    
-    URL = AccountCheckService.GetAccessURL(txtUserCorpNum.Text, txtUserID.Text)
-    
-    If URL = "" Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
-End Sub
-
-'=========================================================================
-' 연동회원의 잔여포인트를 확인합니다.
-' - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetBalance
-'=========================================================================
-Private Sub btnGetBalance_Click()
-    Dim balance As Double
-    
-    balance = AccountCheckService.GetBalance(txtUserCorpNum.Text)
-    
-    If balance < 0 Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    MsgBox "연동회원 잔여포인트 : " + CStr(balance)
-End Sub
 
 '=========================================================================
 ' 계좌성명조회 API 서비스 과금정보를 확인합니다.
@@ -653,6 +509,161 @@ Private Sub btnGetChargeInfo_DEP_Click()
 End Sub
 
 '=========================================================================
+' 1건의 예금주성명을 조회합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#CheckAccountInfo
+'=========================================================================
+Private Sub btnCheckAccountInfo_Click()
+    Dim AccountInfo As PBAccountCheckInfo
+    Dim tmp As String
+    
+    Set AccountInfo = AccountCheckService.CheckAccountInfo(txtUserCorpNum.Text, txtBankCode.Text, txtAccountNumber.Text)
+    
+    If AccountInfo Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    tmp = tmp + "bankCode (기관코드) : " + AccountInfo.bankCode + vbCrLf
+    tmp = tmp + "accountNumber (계좌번호) : " + AccountInfo.accountNumber + vbCrLf
+    tmp = tmp + "accountName (예금주 성명) : " + AccountInfo.accountName + vbCrLf
+    tmp = tmp + "checkDate (확인일시) : " + AccountInfo.checkDate + vbCrLf
+    tmp = tmp + "result (응답코드) : " + AccountInfo.result + vbCrLf
+    tmp = tmp + "resultMessage (응답메시지) : " + AccountInfo.resultMessage
+    
+    MsgBox tmp, , "예금주조회"
+End Sub
+
+'=========================================================================
+' 1건의 예금주실명을 조회합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#CheckDepositorInfo
+'=========================================================================
+Private Sub btnCheckDepositorInfo_Click()
+    Dim DepositorInfo As PBDepositorCheckInfo
+    Dim tmp As String
+    
+    Dim identityNumType As String
+    
+    Select Case cboIdentityNumType.Text
+        Case "P"
+            identityNumType = "P"
+        Case "B"
+            identityNumType = "B"
+        Case Else
+            MsgBox "등록번호 유형을 선택해주세요."
+            Exit Sub
+    End Select
+    
+    Set DepositorInfo = AccountCheckService.CheckDepositorInfo(txtUserCorpNum.Text, txtBankCodeD.Text, txtAccountNumberD.Text, identityNumType, txtIdentityNum.Text)
+    
+    If DepositorInfo Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    tmp = tmp + "bankCode (기관코드) : " + DepositorInfo.bankCode + vbCrLf
+    tmp = tmp + "accountNumber (계좌번호) : " + DepositorInfo.accountNumber + vbCrLf
+    tmp = tmp + "accountName (예금주 성명) : " + DepositorInfo.accountName + vbCrLf
+    tmp = tmp + "checkDate (확인일시) : " + DepositorInfo.checkDate + vbCrLf
+    tmp = tmp + "identityNumType (등록번호 유형) : " + DepositorInfo.identityNumType + vbCrLf
+    tmp = tmp + "identityNum (등록번호) : " + DepositorInfo.identityNum + vbCrLf
+    tmp = tmp + "result (응답코드) : " + DepositorInfo.result + vbCrLf
+    tmp = tmp + "resultMessage (응답메시지) : " + DepositorInfo.resultMessage
+    
+    MsgBox tmp, , "계좌실명조회"
+    
+End Sub
+
+'=========================================================================
+' 사용하고자 하는 아이디의 중복여부를 확인합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#CheckID
+'=========================================================================
+Private Sub btnCheckID_Click()
+    Dim Response As PBResponse
+    
+    Set Response = AccountCheckService.CheckID(txtUserID.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
+End Sub
+
+'=========================================================================
+' 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#CheckIsMember
+'=========================================================================
+Private Sub btnCheckIsMember_Click()
+    Dim Response As PBResponse
+    
+    Set Response = AccountCheckService.CheckIsMember(txtUserCorpNum.Text, LinkID)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
+End Sub
+
+'=========================================================================
+' 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#GetAccessURL
+'=========================================================================
+Private Sub btnGetAccessURL_Click()
+    Dim URL As String
+    
+    URL = AccountCheckService.GetAccessURL(txtUserCorpNum.Text, txtUserID.Text)
+    
+    If URL = "" Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
+End Sub
+
+'=========================================================================
+' 연동회원의 잔여포인트를 확인합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#GetBalance
+'=========================================================================
+
+Private Sub btnGetBalance_Click()
+    Dim balance As Double
+    
+    balance = AccountCheckService.GetBalance(txtUserCorpNum.Text)
+    
+    If balance < 0 Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "연동회원 잔여포인트 : " + CStr(balance)
+End Sub
+
+'=========================================================================
+' 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#GetChargeURL
+'=========================================================================
+Private Sub btnGetChargeURL_Click()
+    Dim URL As String
+    
+    URL = AccountCheckService.GetChargeURL(txtUserCorpNum.Text, txtUserID.Text)
+    
+    If URL = "" Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
+End Sub
+
+'=========================================================================
 ' 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
 ' - https://docs.popbill.com/accountcheck/vb/api#GetPaymentURL
@@ -691,25 +702,6 @@ Private Sub btnGetUseHistoryURL_Click()
 End Sub
 
 '=========================================================================
-' 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetChargeURL
-'=========================================================================
-Private Sub btnGetChargeURL_Click()
-    Dim URL As String
-    
-    URL = AccountCheckService.GetChargeURL(txtUserCorpNum.Text, txtUserID.Text)
-    
-    If URL = "" Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
-End Sub
-
-'=========================================================================
 ' 연동회원의 회사정보를 확인합니다.
 ' - https://docs.popbill.com/accountcheck/vb/api#GetCorpInfo
 '=========================================================================
@@ -735,7 +727,6 @@ End Sub
 
 '=========================================================================
 ' 파트너의 잔여포인트를 확인합니다.
-' - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
 ' - https://docs.popbill.com/accountcheck/vb/api#GetPartnerBalance
 '=========================================================================
 Private Sub btnGetPartnerBalance_Click()
@@ -771,62 +762,21 @@ Private Sub btnGetPartnerURL_CHRG_Click()
 End Sub
 
 '=========================================================================
-' 계좌성명조회시 과금되는 포인트 단가를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
-'=========================================================================
-Private Sub btnGetUnitCost_ACC_Click()
-    Dim unitCost As Double
-    Dim ServiceType As String
-    
-    ServiceType = "성명"
-    
-    unitCost = AccountCheckService.GetUnitCost(txtUserCorpNum.Text, ServiceType)
-    
-    If unitCost < 0 Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    MsgBox "조회단가 : " + CStr(unitCost)
-End Sub
-
-'=========================================================================
-' 계좌실명조회시 과금되는 포인트 단가를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
-'=========================================================================
-Private Sub btnGetUnitCost_DEP_Click()
-    Dim unitCost As Double
-    Dim ServiceType As String
-    
-    ServiceType = "실명"
-    
-    unitCost = AccountCheckService.GetUnitCost(txtUserCorpNum.Text, ServiceType)
-    
-    If unitCost < 0 Then
-        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
-        Exit Sub
-    End If
-    
-    MsgBox "조회단가 : " + CStr(unitCost)
-End Sub
-
-'=========================================================================
 ' 사용자를 연동회원으로 가입처리합니다.
 ' - https://docs.popbill.com/accountcheck/vb/api#JoinMember
 '=========================================================================
 Private Sub btnJoinMember_Click()
-
     Dim joinData As New PBJoinForm
     Dim Response As PBResponse
     
-    '아이디, 6자이상 50자 미만
+    '아이디, 6자이상 50자 이하
     joinData.id = "userid"
     
     '비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
     joinData.Password = "asdf$%^123"
     
     '파트너링크 아이디
-    joinData.linkID = linkID
+    joinData.LinkID = LinkID
     
     '사업자번호, '-'제외, 10자리
     joinData.CorpNum = "1234567890"
@@ -855,12 +805,6 @@ Private Sub btnJoinMember_Click()
     '담당자 연락처, 최대 20자
     joinData.ContactTEL = "02-999-9999"
     
-    '담당자 휴대폰번호, 최대 20자
-    joinData.ContactHP = "010-1234-5678"
-    
-    '담당자 팩스번호, 최대 20자
-    joinData.ContactFAX = "02-999-9998"
-    
     Set Response = AccountCheckService.JoinMember(joinData)
     
     If Response Is Nothing Then
@@ -880,8 +824,7 @@ Private Sub btnGetContactInfo_Click()
     Dim info As PBContactInfo
     Dim ContactID As String
     
-    '확인할 담당자 아이디
-    ContactID = ""
+    ContactID = "testkorea"
     
     Set info = AccountCheckService.GetContactInfo(txtUserCorpNum.Text, ContactID, txtUserID.Text)
     
@@ -890,12 +833,12 @@ Private Sub btnGetContactInfo_Click()
         Exit Sub
     End If
     
-    tmp = "id(아이디) | personName(성명) | email(이메일) | hp(휴대폰번호) |  fax(팩스번호) | tel(연락처) | " _
+    tmp = "id(아이디) | personName(성명) | email(이메일) | tel(연락처) | " _
          + "regDT(등록일시) | searchRole(담당자 권한) | mgrYN(관리자 여부) | state(상태) " + vbCrLf
     
    
-    tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.hp + " | " + info.fax _
-        + info.tel + " | " + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
+    tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.tel + " | " _
+            + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
         
     MsgBox tmp
 End Sub
@@ -916,11 +859,11 @@ Private Sub btnListContact_Click()
         Exit Sub
     End If
     
-    tmp = "id(아이디) | personName(성명) | email(이메일) | hp(휴대폰번호) |  fax(팩스번호) | tel(연락처) | " _
+    tmp = "id(아이디) | personName(성명) | email(이메일) | tel(연락처) | " _
          + "regDT(등록일시) | searchRole(담당자 권한) | mgrYN(관리자 여부) | state(상태) " + vbCrLf
     
     For Each info In resultList
-        tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.hp + " | " + info.fax _
+        tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " _
         + info.tel + " | " + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
     Next
     
@@ -935,23 +878,17 @@ Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
     Dim Response As PBResponse
     
-    '담당자 아이디, 6자 이상 50자 미만
-    joinData.id = "vb6Account001"
+    '담당자 아이디, 6자 이상 50자 이하
+    joinData.id = "testkorea"
     
     '비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
-    joinData.Password = "asdf#$%123"
+    joinData.Password = "asdf$%^123"
     
     '담당자명, 최대 100자
     joinData.personName = "담당자명"
     
     '담당자 연락처, 최대 20자
     joinData.tel = "070-1234-1234"
-    
-    '담당자 휴대폰번호, 최대 20자
-    joinData.hp = "010-1234-1234"
-    
-    '담당자 팩스번,최대 20자
-    joinData.fax = "070-1234-1234"
     
     '담당자 메일주소, 최대 100자
     joinData.email = "test@test.com"
@@ -970,6 +907,47 @@ Private Sub btnRegistContact_Click()
 End Sub
 
 '=========================================================================
+' 계좌성명조회 단가를 확인합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
+'=========================================================================
+Private Sub btnGetUnitCost_ACC_Click()
+    Dim unitCost As Double
+    Dim ServiceType As String
+    
+    ServiceType = "성명"
+    
+    unitCost = AccountCheckService.GetUnitCost(txtUserCorpNum.Text, ServiceType)
+    
+    If unitCost < 0 Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "조회단가 : " + CStr(unitCost)
+End Sub
+
+
+'=========================================================================
+' 계좌실명조회단가를 확인합니다.
+' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
+'=========================================================================
+Private Sub btnGetUnitCost_DEP_Click()
+    Dim unitCost As Double
+    Dim ServiceType As String
+    
+    ServiceType = "실명"
+    
+    unitCost = AccountCheckService.GetUnitCost(txtUserCorpNum.Text, ServiceType)
+    
+    If unitCost < 0 Then
+        MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "조회단가 : " + CStr(unitCost)
+End Sub
+
+'=========================================================================
 ' 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
 ' - https://docs.popbill.com/accountcheck/vb/api#UpdateContact
 '=========================================================================
@@ -978,19 +956,13 @@ Private Sub btnUpdateContact_Click()
     Dim Response As PBResponse
     
     '담당자 아이디
-    joinData.id = "vb6Account001"
+    joinData.id = txtUserID.Text
     
     '담당자 성명, 최대 100자
     joinData.personName = "담당자명_수정"
     
     '담당자 연락처, 최대 20자
     joinData.tel = "070-1234-1234"
-    
-    '담당자 휴대폰번호, 최대 20자
-    joinData.hp = "010-1234-1234"
-        
-    '담당자 팩스번호, 최대 20자
-    joinData.fax = "070-1234-1234"
     
     '담당자 이메일, 최대 100자
     joinData.email = "test@test.com"
@@ -1043,8 +1015,8 @@ End Sub
 
 Private Sub Form_Load()
 
-    '모듈 초기화
-    AccountCheckService.Initialize linkID, SecretKey
+    '예금주조회 모듈 초기화
+    AccountCheckService.Initialize LinkID, SecretKey
     
     '연동환경설정값, True-개발용 False-상업용
     AccountCheckService.IsTest = True
@@ -1054,6 +1026,10 @@ Private Sub Form_Load()
     
     '로컬시스템 시간 사용여부 True-사용, False-미사용, 기본값(False)
     AccountCheckService.UseLocalTimeYN = False
-    
 End Sub
+
+
+
+
+
 
