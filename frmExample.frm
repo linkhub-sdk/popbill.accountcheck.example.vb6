@@ -437,7 +437,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 예금주조회 API VB SDK Example
 '
-' - 업데이트 일자 : 2022-04-06
+' - 업데이트 일자 : 2022-07-26
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
 '
@@ -450,7 +450,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 '링크아이디
-Private Const LinkID = "TESTER"
+Private Const linkID = "TESTER"
 
 '비밀키
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
@@ -597,7 +597,7 @@ End Sub
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = AccountCheckService.CheckIsMember(txtUserCorpNum.Text, LinkID)
+    Set Response = AccountCheckService.CheckIsMember(txtUserCorpNum.Text, linkID)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
@@ -776,7 +776,7 @@ Private Sub btnJoinMember_Click()
     joinData.Password = "asdf$%^123"
     
     '파트너링크 아이디
-    joinData.LinkID = LinkID
+    joinData.linkID = linkID
     
     '사업자번호, '-'제외, 10자리
     joinData.CorpNum = "1234567890"
@@ -826,7 +826,7 @@ Private Sub btnGetContactInfo_Click()
     
     ContactID = "testkorea"
     
-    Set info = AccountCheckService.GetContactInfo(txtUserCorpNum.Text, ContactID, txtUserID.Text)
+    Set info = AccountCheckService.GetContactInfo(txtUserCorpNum.Text, ContactID)
     
     If info Is Nothing Then
         MsgBox ("응답코드 : " + CStr(AccountCheckService.LastErrCode) + vbCrLf + "응답메시지 : " + AccountCheckService.LastErrMessage)
@@ -1016,7 +1016,7 @@ End Sub
 Private Sub Form_Load()
 
     '예금주조회 모듈 초기화
-    AccountCheckService.Initialize LinkID, SecretKey
+    AccountCheckService.Initialize linkID, SecretKey
     
     '연동환경설정값, True-개발용 False-상업용
     AccountCheckService.IsTest = True
