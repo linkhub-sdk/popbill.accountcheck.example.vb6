@@ -437,7 +437,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 예금주조회 API VB SDK Example
 '
-' - 업데이트 일자 : 2022-07-26
+' - 업데이트 일자 : 2022-11-01
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
 '
