@@ -460,7 +460,7 @@ Private AccountCheckService As New PBAccountCheckService
 
 '=========================================================================
 ' 계좌성명조회 API 서비스 과금정보를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetChargeInfo
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetChargeInfo
 '=========================================================================
 Private Sub btnGetChargeInfo_ACC_Click()
     Dim ChargeInfo As PBchargeInfo
@@ -485,7 +485,7 @@ End Sub
 
 '=========================================================================
 ' 계좌실명조회 API 서비스 과금정보를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetChargeInfo
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetChargeInfo
 '=========================================================================
 Private Sub btnGetChargeInfo_DEP_Click()
     Dim ChargeInfo As PBchargeInfo
@@ -510,7 +510,7 @@ End Sub
 
 '=========================================================================
 ' 1건의 예금주성명을 조회합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckAccountInfo
+' - https://developers.popbill.com/reference/accountcheck/vb/api/check#CheckAccountInfo
 '=========================================================================
 Private Sub btnCheckAccountInfo_Click()
     Dim AccountInfo As PBAccountCheckInfo
@@ -535,7 +535,7 @@ End Sub
 
 '=========================================================================
 ' 1건의 예금주실명을 조회합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckDepositorInfo
+' - https://developers.popbill.com/reference/accountcheck/vb/api/check#CheckDepositorInfo
 '=========================================================================
 Private Sub btnCheckDepositorInfo_Click()
     Dim DepositorInfo As PBDepositorCheckInfo
@@ -575,7 +575,7 @@ End Sub
 
 '=========================================================================
 ' 사용하고자 하는 아이디의 중복여부를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckID
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#CheckID
 '=========================================================================
 Private Sub btnCheckID_Click()
     Dim Response As PBResponse
@@ -592,7 +592,7 @@ End Sub
 
 '=========================================================================
 ' 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#CheckIsMember
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#CheckIsMember
 '=========================================================================
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
@@ -610,7 +610,7 @@ End Sub
 '=========================================================================
 ' 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetAccessURL
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#GetAccessURL
 '=========================================================================
 Private Sub btnGetAccessURL_Click()
     Dim URL As String
@@ -628,7 +628,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 잔여포인트를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetBalance
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetBalance
 '=========================================================================
 
 Private Sub btnGetBalance_Click()
@@ -647,7 +647,7 @@ End Sub
 '=========================================================================
 ' 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetChargeURL
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetChargeURL
 '=========================================================================
 Private Sub btnGetChargeURL_Click()
     Dim URL As String
@@ -666,7 +666,7 @@ End Sub
 '=========================================================================
 ' 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetPaymentURL
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetPaymentURL
 '=========================================================================
 Private Sub btnGetPaymentURL_Click()
     Dim URL As String
@@ -685,7 +685,7 @@ End Sub
 '=========================================================================
 ' 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetUseHistoryURL
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetUseHistoryURL
 '=========================================================================
 Private Sub btnGetUseHistoryURL_Click()
     Dim URL As String
@@ -703,7 +703,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 회사정보를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetCorpInfo
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#GetCorpInfo
 '=========================================================================
 Private Sub btnGetCorpInfo_Click()
     Dim CorpInfo As PBCorpInfo
@@ -716,18 +716,18 @@ Private Sub btnGetCorpInfo_Click()
         Exit Sub
     End If
     
-    tmp = tmp + "ceoname (대표자성명) : " + CorpInfo.CEOName + vbCrLf
-    tmp = tmp + "corpName (상호명) : " + CorpInfo.CorpName + vbCrLf
-    tmp = tmp + "addr (주소) : " + CorpInfo.Addr + vbCrLf
-    tmp = tmp + "bizType (업태) : " + CorpInfo.BizType + vbCrLf
-    tmp = tmp + "bizClass (종목) : " + CorpInfo.BizClass + vbCrLf
+    tmp = tmp + "ceoname (대표자성명) : " + CorpInfo.ceoname + vbCrLf
+    tmp = tmp + "corpName (상호명) : " + CorpInfo.corpName + vbCrLf
+    tmp = tmp + "addr (주소) : " + CorpInfo.addr + vbCrLf
+    tmp = tmp + "bizType (업태) : " + CorpInfo.bizType + vbCrLf
+    tmp = tmp + "bizClass (종목) : " + CorpInfo.bizClass + vbCrLf
     
     MsgBox tmp
 End Sub
 
 '=========================================================================
 ' 파트너의 잔여포인트를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetPartnerBalance
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetPartnerBalance
 '=========================================================================
 Private Sub btnGetPartnerBalance_Click()
     Dim balance As Double
@@ -745,7 +745,7 @@ End Sub
 '=========================================================================
 ' 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetPartnerURL
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetPartnerURL
 '=========================================================================
 Private Sub btnGetPartnerURL_CHRG_Click()
     Dim URL As String
@@ -763,7 +763,7 @@ End Sub
 
 '=========================================================================
 ' 사용자를 연동회원으로 가입처리합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#JoinMember
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#JoinMember
 '=========================================================================
 Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
@@ -782,19 +782,19 @@ Private Sub btnJoinMember_Click()
     joinData.CorpNum = "1234567890"
     
     '대표자성명, 최대 100자
-    joinData.CEOName = "대표자성명"
+    joinData.ceoname = "대표자성명"
     
     '상호명, 최대 200자
-    joinData.CorpName = "회원상호"
+    joinData.corpName = "회원상호"
     
     '사업장 주소, 최대 300자
-    joinData.Addr = "주소"
+    joinData.addr = "주소"
     
     '업태, 최대 100자
-    joinData.BizType = "업태"
+    joinData.bizType = "업태"
     
     '종목, 최대 100자
-    joinData.BizClass = "종목"
+    joinData.bizClass = "종목"
 
     '담당자 성명, 최대 100자
     joinData.ContactName = "담당자성명"
@@ -817,7 +817,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-' https://docs.popbill.com/accountcheck/vb/api#GetContactInfo
+' https://developers.popbill.com/reference/accountcheck/vb/api/member#GetContactInfo
 '=========================================================================
 Private Sub btnGetContactInfo_Click()
     Dim tmp As String
@@ -845,7 +845,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#ListContact
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#ListContact
 '=========================================================================
 Private Sub btnListContact_Click()
     Dim resultList As Collection
@@ -872,7 +872,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#RegistContact
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#RegistContact
 '=========================================================================
 Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
@@ -908,7 +908,7 @@ End Sub
 
 '=========================================================================
 ' 계좌성명조회 단가를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetUnitCost
 '=========================================================================
 Private Sub btnGetUnitCost_ACC_Click()
     Dim unitCost As Double
@@ -929,7 +929,7 @@ End Sub
 
 '=========================================================================
 ' 계좌실명조회단가를 확인합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#GetUnitCost
+' - https://developers.popbill.com/reference/accountcheck/vb/api/point#GetUnitCost
 '=========================================================================
 Private Sub btnGetUnitCost_DEP_Click()
     Dim unitCost As Double
@@ -949,7 +949,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#UpdateContact
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#UpdateContact
 '=========================================================================
 Private Sub btnUpdateContact_Click()
     Dim joinData As New PBContactInfo
@@ -982,26 +982,26 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 회사정보를 수정합니다.
-' - https://docs.popbill.com/accountcheck/vb/api#UpdateCorpInfo
+' - https://developers.popbill.com/reference/accountcheck/vb/api/member#UpdateCorpInfo
 '=========================================================================
 Private Sub btnUpdateCorpInfo_Click()
     Dim CorpInfo As New PBCorpInfo
     Dim Response As PBResponse
     
     '대표자명, 최대 100자
-    CorpInfo.CEOName = "대표자"
+    CorpInfo.ceoname = "대표자"
     
     '상호, 최대 200자
-    CorpInfo.CorpName = "상호"
+    CorpInfo.corpName = "상호"
     
     '주소, 최대 300자
-    CorpInfo.Addr = "서울특별시"
+    CorpInfo.addr = "서울특별시"
     
     '업태, 최대 100자
-    CorpInfo.BizType = "업태"
+    CorpInfo.bizType = "업태"
     
     '종목, 최대 100자
-    CorpInfo.BizClass = "종목"
+    CorpInfo.bizClass = "종목"
     
     Set Response = AccountCheckService.UpdateCorpInfo(txtUserCorpNum.Text, CorpInfo)
     
@@ -1027,6 +1027,8 @@ Private Sub Form_Load()
     '로컬시스템 시간 사용여부 True-사용, False-미사용, 기본값(False)
     AccountCheckService.UseLocalTimeYN = False
 End Sub
+
+
 
 
 
